@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import { spawn, execFileSync } from 'node:child_process';
 import pg from 'pg';
-const env = { ...process.env, DATABASE_URL: 'postgresql://willraphaelson@127.0.0.1:55439/postgres', PORT: '3347' };
+const env = { ...process.env, DATABASE_URL: process.env.LOCAL_TEST_DATABASE_URL ?? `postgresql://${process.env.USER}@127.0.0.1:55439/postgres`, PORT: '3347' };
 const children = [];
 const run = file => execFileSync(process.execPath, [file], { env, encoding: 'utf8', timeout: 15000 });
 const start = file => { const child = spawn(process.execPath, [file], { env, stdio: ['ignore', 'pipe', 'pipe'] }); children.push(child); return child; };
